@@ -10,17 +10,15 @@ function Header() {
                             <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                                 <i className="fa fa-bars"></i>
                             </button>
-                            <a className="navbar-brand" href="index.html">Bogi</a>
+                            <a className="navbar-brand" href="index.html">Bogomil</a>
                         </div>
                         <div className="collapse navbar-collapse menu-ui-design" id="navbar-menu">
                             <ul className="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
                                 <li className=" smooth-menu active"></li>
+                                <li className="smooth-menu"><a href="#about">About</a></li>
                                 <li className=" smooth-menu"><a href="#education">education</a></li>
                                 <li className="smooth-menu"><a href="#skills">skills</a></li>
                                 <li className="smooth-menu"><a href="#experience">experience</a></li>
-                                <li className="smooth-menu"><a href="#profiles">profile</a></li>
-                                <li className="smooth-menu"><a href="#portfolio">portfolio</a></li>
-                                <li className="smooth-menu"><a href="#clients">clients</a></li>
                                 <li className="smooth-menu"><a href="#contact">contact</a></li>
                             </ul>
                         </div>

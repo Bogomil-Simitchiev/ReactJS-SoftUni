@@ -1,7 +1,7 @@
 function About(props) {
     return (
-        <section id="about" class="about">
-        <div class="section-heading text-center">
+        <section class="about">
+        <div id="about" class="section-heading text-center">
           <h2>about me</h2>
         </div>
         <div class="container">
@@ -39,41 +39,7 @@ function About(props) {
               </div>
               <div class="col-sm-offset-1 col-sm-5">
                 <div class="single-about-img">
-                  <img src={props.photoPath} alt="profile_image"/>
-                  <div class="about-list-icon">
-                    <ul>
-                      <li>
-                        <a href="#">
-                          <i  class="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i  class="fa fa-dribbble" aria-hidden="true"></i>
-                        </a>
-                        
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i  class="fa fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i  class="fa fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i  class="fa fa-instagram" aria-hidden="true"></i>
-                        </a>
-                      </li>
-                      
-                      
-                    </ul>
-                  </div>
-  
+                  <img src={props.photoPath} alt="profile_image"/>          
                 </div>
   
               </div>

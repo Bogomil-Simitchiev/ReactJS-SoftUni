@@ -1,5 +1,6 @@
 function Education() {
     return (
+        
         <section id="education" class="education">
             <div class="section-heading text-center">
                 <h2>education</h2>
