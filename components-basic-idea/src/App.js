@@ -1,5 +1,6 @@
 import './App.css';
 import BookList from './components/BookList';
+import Clicker from './components/Clicker';
 
 const data = [
   {
@@ -19,8 +20,10 @@ const data = [
 function App() {
   return (
     <div className="App">
-      <BookList data={data}/>
+      <BookList data={data} />
+      <Clicker />
     </div>
+
   );
 }
 
