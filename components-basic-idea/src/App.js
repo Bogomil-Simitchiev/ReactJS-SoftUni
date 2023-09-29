@@ -1,6 +1,7 @@
 import './App.css';
 import BookList from './components/BookList';
 import Clicker from './components/Clicker';
+import Counter from './components/Counter';
 
 const data = [
   {
@@ -22,6 +23,7 @@ function App() {
     <div className="App">
       <BookList data={data} />
       <Clicker />
+      <Counter />
     </div>
 
   );
