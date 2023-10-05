@@ -1,4 +1,6 @@
 import Book from "./Book";
+import styles from "./BookList.module.css"
+
 
 function BookList(props) {
 
@@ -7,7 +9,7 @@ function BookList(props) {
     )
 
     return (
-        <ul>
+        <ul className={`${styles['remove-dots']} ${styles['set-backgroundColor']}`}>
             {books}
         </ul>
     );

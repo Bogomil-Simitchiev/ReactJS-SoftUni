@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "./Book.module.css"
 
 function Book(props) {
     let [changeColor, setColor] = useState(false);
@@ -21,7 +22,7 @@ function Book(props) {
     }
 
     return (
-        <li style={style}>
+        <li style={style} className={styles['font-family-color']}>
             <h1>Title: {props.title}</h1>
             <p>Price: {props.price}</p>
             <p>Author: {props.author}</p>
