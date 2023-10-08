@@ -7,7 +7,7 @@ export const Todo = (props) => {
     return (
         <li className={completedOrNot}>
             <span className="task-title">{props.title}</span>
-            <button onClick={props.onClickHandler}>{props.isCompleted ? 'Completed' : 'Incompleted'}</button>
+            <button onClick={() => props.onClickHandler(props.todo)}>{props.isCompleted ? 'Completed' : 'Incompleted'}</button>
         </li>
     )
 }
