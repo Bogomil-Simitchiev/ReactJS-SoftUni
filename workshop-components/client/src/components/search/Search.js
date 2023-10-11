@@ -25,10 +25,10 @@ export const Search = () => {
 
             <div className="filter">
                 <span>Search Criteria:</span>
-                <select name="criteria" className="criteria" value="">
-                    <option value="">Option 1</option>
-                    <option value="">Option 2</option>
-                    <option value="">Option 3</option>
+                <select name="criteria" className="criteria">
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                    <option>Option 3</option>
                 </select>
             </div>
         </form>

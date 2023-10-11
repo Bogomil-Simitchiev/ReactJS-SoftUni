@@ -2,6 +2,7 @@ import './App.css';
 import { Footer } from './components/common/Footer';
 import { Header } from './components/common/Header';
 import { Search } from './components/search/Search';
+import { UserList } from './components/user-list/UserList';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <section className="card users-container">
 
           <Search />
+          <UserList />
           
         </section>
 
