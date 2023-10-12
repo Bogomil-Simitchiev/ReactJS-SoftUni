@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const UserItem = (props) => {
     return (
-        <tr>
-
+        <>
             <td>
                 <img src={props.imageUrl} alt={`${props.firstName}'s profile`} className="image" />
             </td>
@@ -24,11 +23,10 @@ export const UserItem = (props) => {
                 </button>
 
 
-                <button className="btn info-btn">
+                <button className="btn info-btn" onClick={() => props.clickDetails(props._id)}>
                     <FontAwesomeIcon icon={faInfoCircle} />
                 </button>
             </td>
-
-        </tr>
+        </>
     )
 }
