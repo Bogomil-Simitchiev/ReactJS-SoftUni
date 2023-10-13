@@ -14,8 +14,8 @@ export const UserItem = (props) => {
             <td>{props.createdAt}</td>
 
             <td className="actions">
-                <button className="btn edit-btn">
-                    <FontAwesomeIcon icon={faEdit} />
+                <button className="btn edit-btn" onClick={() => props.clickEdit(props._id)} >
+                    <FontAwesomeIcon icon={faEdit}/>
                 </button>
 
                 <button className="btn delete-btn">
