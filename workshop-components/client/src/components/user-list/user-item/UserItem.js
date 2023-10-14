@@ -15,13 +15,12 @@ export const UserItem = (props) => {
 
             <td className="actions">
                 <button className="btn edit-btn" onClick={() => props.clickEdit(props._id)} >
-                    <FontAwesomeIcon icon={faEdit}/>
+                    <FontAwesomeIcon icon={faEdit} />
                 </button>
 
-                <button className="btn delete-btn">
+                <button className="btn delete-btn" onClick={() => props.clickDelete(props._id)}>
                     <FontAwesomeIcon icon={faTrash} />
                 </button>
-
 
                 <button className="btn info-btn" onClick={() => props.clickDetails(props._id)}>
                     <FontAwesomeIcon icon={faInfoCircle} />

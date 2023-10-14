@@ -1,19 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';// for FontAwesome 6
 import { faCity, faEnvelope, faHome, faImage, faMapMarkedAlt, faPhone, faStreetView, faUser, faX } from '@fortawesome/free-solid-svg-icons';
 
-export const UserEdit = (props) => {
+export const UserCreate = (props) => {
     return (
         <div className="overlay">
             <div className="backdrop" onClick={props.onClose} />
             <div className="modal">
                 <div className="duser-container">
                     <header className="headers">
-                        <h2>Edit User</h2>
+                        <h2>Add New User</h2>
                         <button className="btn close" onClick={props.onClose}>
                             <FontAwesomeIcon icon={faX} />
                         </button>
                     </header>
-                    <form className="form" method='get'>
+                    <form className="form" onSubmit={props.clickAddUser}>
                         <div className="form-row">
                             <div className="group">
                                 <label htmlFor="firstName">Firstname:</label>
@@ -26,7 +26,6 @@ export const UserEdit = (props) => {
                                         id="firstName"
                                         name="firstName"
                                         type="text"
-                                        defaultValue={props.user.firstName}
                                     />
                                 </div>
                             </div>
@@ -41,7 +40,6 @@ export const UserEdit = (props) => {
                                         id="lastName"
                                         name="lastName"
                                         type="text"
-                                        defaultValue={props.user.lastName}
                                     />
                                 </div>
                             </div>
@@ -58,7 +56,6 @@ export const UserEdit = (props) => {
                                         id="email"
                                         name="email"
                                         type="email"
-                                        defaultValue={props.user.email}
                                     />
                                 </div>
                             </div>
@@ -73,7 +70,6 @@ export const UserEdit = (props) => {
                                         id="phoneNumber"
                                         name="phoneNumber"
                                         type="text"
-                                        defaultValue={props.user.phoneNumber}
                                     />
                                 </div>
                             </div>
@@ -89,7 +85,6 @@ export const UserEdit = (props) => {
                                     id="imageUrl"
                                     name="imageUrl"
                                     type="text"
-                                    defaultValue={props.user.imageUrl}
                                 />
                             </div>
                         </div>
@@ -105,7 +100,6 @@ export const UserEdit = (props) => {
                                         id="country"
                                         name="country"
                                         type="text"
-                                        defaultValue={props.user.address.country}
                                     />
                                 </div>
                             </div>
@@ -120,7 +114,6 @@ export const UserEdit = (props) => {
                                         id="city"
                                         name="city"
                                         type="text"
-                                        defaultValue={props.user.address.city}
                                     />
                                 </div>
                             </div>
@@ -137,7 +130,6 @@ export const UserEdit = (props) => {
                                         id="street"
                                         name="street"
                                         type="text"
-                                        defaultValue={props.user.address.street}
                                     />
                                 </div>
                             </div>
@@ -152,14 +144,13 @@ export const UserEdit = (props) => {
                                         id="streetNumber"
                                         name="streetNumber"
                                         type="number"
-                                        defaultValue={props.user.address.streetNumber}
                                     />
                                 </div>
                             </div>
                         </div>
                         <div className="actions">
                             <div className="buttons">
-                                <button id='saveBtn' className="btn">Edit</button>
+                                <button id='saveBtn' className="btn" type='submit'>Save</button>
                                 <button id='cancelBtn' className="btn" onClick={props.onClose}>Cancel</button>
                             </div>
                         </div>

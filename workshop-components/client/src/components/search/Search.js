@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-
 export const Search = () => {
     return (
         <form className="search-form">
@@ -15,7 +14,7 @@ export const Search = () => {
                     name="search"
                 />
                 <button className="btn close-btn">
-                <FontAwesomeIcon icon={faXmark} />
+                    <FontAwesomeIcon icon={faXmark} />
 
                 </button>
                 <button className="btn" title="Please, select the search criteria">

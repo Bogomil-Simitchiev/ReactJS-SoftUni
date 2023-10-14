@@ -15,6 +15,10 @@ function App() {
         userService.getUsers().then(users => setUsers(users));
     }, [])
 
+    const addNewUser = (newUser) => {
+        setUsers(oldUsers => [...oldUsers, newUser])
+    }
+
     return (
         <div>
             <Header />
@@ -24,7 +28,7 @@ function App() {
                 <section className="card users-container">
 
                     <Search />
-                    <UserList users={users} />
+                    <UserList users={users} addNewUser={addNewUser} />
 
                 </section>
 

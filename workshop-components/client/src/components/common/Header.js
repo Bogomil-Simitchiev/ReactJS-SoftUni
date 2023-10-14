@@ -1,6 +1,6 @@
 export const Header = () => {
-    return (
-        <header className="header">
+  return (
+    <header className="header">
       <div className="logo">
         <span className="course">
           React Course - June 2022
@@ -9,5 +9,5 @@ export const Header = () => {
       </div>
     </header>
 
-    )
+  )
 }
