@@ -1,7 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';// for FontAwesome 6
 import { faX } from "@fortawesome/free-solid-svg-icons"
+import { deleteUser } from '../../../services/userService';
 
 export const UserDelete = (props) => {
+
+    const clickDeleteUser = (userId) => {
+        const updatedUsers = props.users.filter(user => user._id !== userId);
+
+        deleteUser(userId)
+            .then(userId => {
+                props.updateUsers(updatedUsers);
+                props.onClose();
+            })
+    }
     return (
         <div className="overlay">
             <div className="backdrop" onClick={props.onClose}></div>
@@ -17,9 +28,9 @@ export const UserDelete = (props) => {
                         <div className="form-actions">
                             <br />
 
-                            <button id='deleteBtn' className="btn" type='submit'>Delete</button>
+                            <button id='deleteBtn' className="btn" onClick={() => clickDeleteUser(props.user._id)}>Delete</button>
                             <br />
-                            <button id='cancelBtn' className="btn" type='button' onClick={props.onClose}>Cancel</button>
+                            <button id='cancelBtn' className="btn" onClick={props.onClose}>Cancel</button>
 
                         </div>
                     </div>

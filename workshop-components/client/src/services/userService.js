@@ -23,3 +23,21 @@ export const createUser = async (userData) => {
     const result = await response.json();
     return result.user;
 }
+export const updateUser = async (userData, userId) => {
+    const response = await fetch(baseUrl + `/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    });
+    const result = await response.json();
+    return result.user;
+}
+export const deleteUser = async (userId) => {
+    const response = await fetch(baseUrl + `/${userId}`, {
+        method: 'DELETE',
+    });
+    const result = await response.json();
+    return result;
+}

@@ -16,7 +16,10 @@ function App() {
     }, [])
 
     const addNewUser = (newUser) => {
-        setUsers(oldUsers => [...oldUsers, newUser])
+        setUsers(oldUsers => [...oldUsers, newUser]);
+    }
+    const updateUsers = (newUsers) => {
+        setUsers(oldUsers => oldUsers = newUsers);
     }
 
     return (
@@ -28,7 +31,7 @@ function App() {
                 <section className="card users-container">
 
                     <Search />
-                    <UserList users={users} addNewUser={addNewUser} />
+                    <UserList users={users} addNewUser={addNewUser} updateUsers={updateUsers} />
 
                 </section>
 

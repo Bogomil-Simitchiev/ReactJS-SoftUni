@@ -1,5 +1,3 @@
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UserItem } from './user-item/UserItem';
 import { UserDetails } from './user-details/UserDetails';
 
@@ -81,12 +79,16 @@ export const UserList = (props) => {
                     &&
                     <UserEdit user={selectedUser.user}
                         onClose={clickCloseHandler}
+                        updateUsers={props.updateUsers}
+                        users={props.users}
                     />
                 }
                 {selectedUser.action === userActions.Delete
                     &&
                     <UserDelete user={selectedUser.user}
                         onClose={clickCloseHandler}
+                        updateUsers={props.updateUsers}
+                        users={props.users}
                     />
                 }
                 {selectedUser.action === userActions.Add
@@ -98,6 +100,7 @@ export const UserList = (props) => {
                 }
 
                 <table className="table">
+                    {props.users.length === 0 && <p>No users added</p>}
                     <thead>
                         <tr>
                             <th>
@@ -125,7 +128,6 @@ export const UserList = (props) => {
 
                             <th>
                                 Created
-                                <FontAwesomeIcon icon={faArrowDown} />
                             </th>
 
                             <th>
@@ -135,14 +137,20 @@ export const UserList = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.users.map(user =>
-                            <tr key={user._id}>
-                                <UserItem {...user}
-                                    clickDetails={clickDetailsHandler}
-                                    clickEdit={clickEditHandler}
-                                    clickDelete={clickDeleteHandler}
-                                />
-                            </tr>
+                        {props.users.map(user => {
+                            if (!user) {
+                                return <></>;
+                            } else {
+                                return <tr key={user._id}>
+                                    <UserItem {...user}
+                                        clickDetails={clickDetailsHandler}
+                                        clickEdit={clickEditHandler}
+                                        clickDelete={clickDeleteHandler}
+                                    />
+                                </tr>
+                            }
+                        }
+
                         )
                         }
                     </tbody>

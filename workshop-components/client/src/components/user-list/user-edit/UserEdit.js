@@ -1,7 +1,42 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';// for FontAwesome 6
 import { faCity, faEnvelope, faHome, faImage, faMapMarkedAlt, faPhone, faStreetView, faUser, faX } from '@fortawesome/free-solid-svg-icons';
+import { updateUser } from '../../../services/userService';
 
 export const UserEdit = (props) => {
+    const clickUpdateUser = (e, userId) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            imageUrl,
+            ...address
+        } = Object.fromEntries(formData);
+
+        const existingUser = {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            imageUrl,
+            address
+        }
+
+        const updatedUsers = props.users.map((user) =>
+            user._id === userId ? { ...existingUser, _id: userId, createdAt: user.createdAt, updatedAt: user.updatedAt } : user
+        )
+
+        updateUser(existingUser, userId)
+            .then(user => {
+                props.updateUsers(updatedUsers);
+                props.onClose();
+            })
+    }
+
     return (
         <div className="overlay">
             <div className="backdrop" onClick={props.onClose} />
@@ -13,7 +48,7 @@ export const UserEdit = (props) => {
                             <FontAwesomeIcon icon={faX} />
                         </button>
                     </header>
-                    <form className="form" method='get'>
+                    <form className="form" onSubmit={(e) => clickUpdateUser(e, props.user._id)}>
                         <div className="form-row">
                             <div className="group">
                                 <label htmlFor="firstName">Firstname:</label>
@@ -159,7 +194,7 @@ export const UserEdit = (props) => {
                         </div>
                         <div className="actions">
                             <div className="buttons">
-                                <button id='saveBtn' className="btn">Edit</button>
+                                <button id='saveBtn' className="btn" type="submit">Edit</button>
                                 <button id='cancelBtn' className="btn" onClick={props.onClose}>Cancel</button>
                             </div>
                         </div>

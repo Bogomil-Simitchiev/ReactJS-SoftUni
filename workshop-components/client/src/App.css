@@ -877,10 +877,12 @@ ul {
   width: 60px;
   background-color: #943232;
 }
-#deleteBtn{
+
+#deleteBtn {
   width: 60px;
   background-color: #5cb85c;
 }
+
 .confirm-container {
   padding: 0px;
 }
@@ -905,8 +907,8 @@ ul {
   position: relative;
 }
 
-.btn-add{
-  background:rgb(18, 41, 54);
+.btn-add {
+  background: rgb(18, 41, 54);
   border: none;
   padding: 8px 20px;
   height: 40px;
@@ -919,6 +921,7 @@ ul {
   font: inherit;
   font-weight: bold;
 }
-.btn-add:hover{
+
+.btn-add:hover {
   background-color: rgb(42, 118, 162);
 }
