@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function App() {
     const [values, setValues] = useState({
@@ -11,6 +11,8 @@ function App() {
         confirmTerms: false
     })
 
+    const infoRef = useRef();
+
     const changeHandler = (e) => {
         setValues(state => ({
             ...state,
@@ -19,6 +21,12 @@ function App() {
                     : e.target.value
         }))
     }
+    useEffect(() => {
+        if (values.username && values.age) {
+            infoRef.current.value = `${values.username} - ${values.age}`;
+        }
+
+    }, [values.username, values.age])
 
 
     const submitHandler = (e) => {
@@ -62,6 +70,10 @@ function App() {
                     </div>
 
                     <input type='submit' value='Register' disabled={!values.confirmTerms} />
+                    <div>
+                        <label htmlFor='fullname'>Name and ages:</label>
+                        <input type='text' id='fullname' name='fullname' ref={infoRef} />
+                    </div>
                 </form>
             </header>
         </div>
