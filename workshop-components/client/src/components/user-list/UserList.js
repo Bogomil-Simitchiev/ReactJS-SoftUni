@@ -36,28 +36,7 @@ export const UserList = (props) => {
             .then(user => setSelectedUser({ user, action: userActions.Delete }))
     }
 
-    const clickAddUser = (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-
-        const {
-            firstName,
-            lastName,
-            email,
-            phoneNumber,
-            imageUrl,
-            ...address
-        } = Object.fromEntries(formData);
-
-        const newUser = {
-            firstName,
-            lastName,
-            email,
-            phoneNumber,
-            imageUrl,
-            address
-        }
+    const clickAddUser = (newUser) => {
         createUser(newUser)
             .then(user => {
                 props.addNewUser(user);
@@ -138,9 +117,7 @@ export const UserList = (props) => {
                     </thead>
                     <tbody>
                         {props.users.map(user => {
-                            if (!user) {
-                                return <></>;
-                            } else {
+                            if (user) {
                                 return <tr key={user._id}>
                                     <UserItem {...user}
                                         clickDetails={clickDetailsHandler}
@@ -149,10 +126,7 @@ export const UserList = (props) => {
                                     />
                                 </tr>
                             }
-                        }
-
-                        )
-                        }
+                        })}
                     </tbody>
                 </table>
             </div>

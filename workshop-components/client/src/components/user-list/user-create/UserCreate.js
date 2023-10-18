@@ -1,7 +1,46 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';// for FontAwesome 6
 import { faCity, faEnvelope, faHome, faImage, faMapMarkedAlt, faPhone, faStreetView, faUser, faX } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 export const UserCreate = (props) => {
+    const [firstNameError, setFirstNameError] = useState('');
+
+    const [values, setValues] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        imageUrl: '',
+        country: '',
+        city: '',
+        street: '',
+        streetNumber: '',
+    })
+
+    const firstNameErrorHandler = (e) => {
+        if (values.firstName.length < 3) {
+            setFirstNameError(true);
+        } else {
+            setFirstNameError(false);
+        }
+    }
+
+    const changeHandler = (e) => {
+        setValues(state => ({
+            ...state,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        const { country, city, street, streetNumber, ...userData } = values;
+        userData.address = { country, city, street, streetNumber };
+        props.clickAddUser(userData);
+
+    }
+
     return (
         <div className="overlay">
             <div className="backdrop" onClick={props.onClose} />
@@ -13,7 +52,7 @@ export const UserCreate = (props) => {
                             <FontAwesomeIcon icon={faX} />
                         </button>
                     </header>
-                    <form className="form" onSubmit={props.clickAddUser}>
+                    <form className="form" onSubmit={submitHandler}>
                         <div className="form-row">
                             <div className="group">
                                 <label htmlFor="firstName">Firstname:</label>
@@ -26,8 +65,15 @@ export const UserCreate = (props) => {
                                         id="firstName"
                                         name="firstName"
                                         type="text"
+                                        value={values.firstName}
+                                        onChange={changeHandler}
+                                        onBlur={firstNameErrorHandler}
                                     />
+
                                 </div>
+                                {firstNameError &&
+                                    <p className="form error">Firstname should be at least 3 characters long!</p>
+                                }
                             </div>
                             <div className="group">
                                 <label htmlFor="lastName">Lastname:</label>
@@ -40,6 +86,8 @@ export const UserCreate = (props) => {
                                         id="lastName"
                                         name="lastName"
                                         type="text"
+                                        value={values.lastName}
+                                        onChange={changeHandler}
                                     />
                                 </div>
                             </div>
@@ -56,6 +104,8 @@ export const UserCreate = (props) => {
                                         id="email"
                                         name="email"
                                         type="email"
+                                        value={values.email}
+                                        onChange={changeHandler}
                                     />
                                 </div>
                             </div>
@@ -70,6 +120,8 @@ export const UserCreate = (props) => {
                                         id="phoneNumber"
                                         name="phoneNumber"
                                         type="text"
+                                        value={values.phoneNumber}
+                                        onChange={changeHandler}
                                     />
                                 </div>
                             </div>
@@ -85,6 +137,8 @@ export const UserCreate = (props) => {
                                     id="imageUrl"
                                     name="imageUrl"
                                     type="text"
+                                    value={values.imageUrl}
+                                    onChange={changeHandler}
                                 />
                             </div>
                         </div>
@@ -100,6 +154,8 @@ export const UserCreate = (props) => {
                                         id="country"
                                         name="country"
                                         type="text"
+                                        value={values.country}
+                                        onChange={changeHandler}
                                     />
                                 </div>
                             </div>
@@ -114,6 +170,8 @@ export const UserCreate = (props) => {
                                         id="city"
                                         name="city"
                                         type="text"
+                                        value={values.city}
+                                        onChange={changeHandler}
                                     />
                                 </div>
                             </div>
@@ -130,6 +188,9 @@ export const UserCreate = (props) => {
                                         id="street"
                                         name="street"
                                         type="text"
+                                        value={values.street}
+                                        onChange={changeHandler}
+
                                     />
                                 </div>
                             </div>
@@ -144,6 +205,8 @@ export const UserCreate = (props) => {
                                         id="streetNumber"
                                         name="streetNumber"
                                         type="number"
+                                        value={values.streetNumber}
+                                        onChange={changeHandler}
                                     />
                                 </div>
                             </div>
