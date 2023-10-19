@@ -3,7 +3,7 @@ import { faCity, faEnvelope, faHome, faImage, faMapMarkedAlt, faPhone, faStreetV
 import { useState } from 'react';
 
 export const UserCreate = (props) => {
-    const [firstNameError, setFirstNameError] = useState('');
+    const [errors, setErrors] = useState({});
 
     const [values, setValues] = useState({
         firstName: '',
@@ -17,13 +17,20 @@ export const UserCreate = (props) => {
         streetNumber: '',
     })
 
-    const firstNameErrorHandler = (e) => {
-        if (values.firstName.length < 3) {
-            setFirstNameError(true);
-        } else {
-            setFirstNameError(false);
-        }
+    const minLength = (e, limit) => {
+        setErrors(state => ({
+            ...state,
+            [e.target.name]: values[e.target.name].length < limit
+        }))
     }
+    const isPositive = (e) => {
+        setErrors(state => ({
+            ...state,
+            [e.target.name]: values[e.target.name] < 0
+        }))
+    }
+
+    const isValidForm = Object.values(errors).some(x => x);
 
     const changeHandler = (e) => {
         setValues(state => ({
@@ -67,11 +74,11 @@ export const UserCreate = (props) => {
                                         type="text"
                                         value={values.firstName}
                                         onChange={changeHandler}
-                                        onBlur={firstNameErrorHandler}
+                                        onBlur={(e) => minLength(e, 3)}
                                     />
 
                                 </div>
-                                {firstNameError &&
+                                {errors.firstName &&
                                     <p className="form error">Firstname should be at least 3 characters long!</p>
                                 }
                             </div>
@@ -88,8 +95,12 @@ export const UserCreate = (props) => {
                                         type="text"
                                         value={values.lastName}
                                         onChange={changeHandler}
+                                        onBlur={(e) => minLength(e, 3)}
                                     />
                                 </div>
+                                {errors.lastName &&
+                                    <p className="form error">Lastname should be at least 3 characters long!</p>
+                                }
                             </div>
                         </div>
                         <div className="form-row">
@@ -122,8 +133,12 @@ export const UserCreate = (props) => {
                                         type="text"
                                         value={values.phoneNumber}
                                         onChange={changeHandler}
+                                        onBlur={(e) => minLength(e, 6)}
                                     />
                                 </div>
+                                {errors.phoneNumber &&
+                                    <p className="form error">Phone number should be at least 6 numbers!</p>
+                                }
                             </div>
                         </div>
                         <div className="group">
@@ -156,8 +171,12 @@ export const UserCreate = (props) => {
                                         type="text"
                                         value={values.country}
                                         onChange={changeHandler}
+                                        onBlur={(e) => minLength(e, 3)}
                                     />
                                 </div>
+                                {errors.country &&
+                                    <p className="form error">Country should be at least 3 characters long!</p>
+                                }
                             </div>
                             <div className="group">
                                 <label htmlFor="city">City:</label>
@@ -172,8 +191,13 @@ export const UserCreate = (props) => {
                                         type="text"
                                         value={values.city}
                                         onChange={changeHandler}
+                                        onBlur={(e) => minLength(e, 3)}
+
                                     />
                                 </div>
+                                {errors.city &&
+                                    <p className="form error">City should be at least 3 characters long!</p>
+                                }
                             </div>
                         </div>
                         <div className="form-row">
@@ -190,9 +214,14 @@ export const UserCreate = (props) => {
                                         type="text"
                                         value={values.street}
                                         onChange={changeHandler}
+                                        onBlur={(e) => minLength(e, 3)}
+
 
                                     />
                                 </div>
+                                {errors.street &&
+                                    <p className="form error">Street should be at least 3 characters long!</p>
+                                }
                             </div>
                             <div className="group">
                                 <label htmlFor="streetNumber">Street number:</label>
@@ -207,13 +236,17 @@ export const UserCreate = (props) => {
                                         type="number"
                                         value={values.streetNumber}
                                         onChange={changeHandler}
+                                        onBlur={(e) => isPositive(e)}
                                     />
                                 </div>
+                                {errors.streetNumber &&
+                                    <p className="form error">Street number should be positive!</p>
+                                }
                             </div>
                         </div>
                         <div className="actions">
                             <div className="buttons">
-                                <button id='saveBtn' className="btn" type='submit'>Save</button>
+                                <button id='saveBtn' className="btn" type='submit' disabled={isValidForm}>Save</button>
                                 <button id='cancelBtn' className="btn" onClick={props.onClose}>Cancel</button>
                             </div>
                         </div>
