@@ -4,6 +4,8 @@ import { Navigation } from './components/Navigation';
 import { Home } from './components/Home';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
+import { Movies } from './components/Movies';
+import { Details } from './components/Details';
 
 function App() {
   return (
@@ -14,7 +16,11 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/movies' element={<Movies />} />
+        <Route path='/movies/:movieId' element={<Details />} />
+
       </Routes>
+      
     </div>
   );
 }
