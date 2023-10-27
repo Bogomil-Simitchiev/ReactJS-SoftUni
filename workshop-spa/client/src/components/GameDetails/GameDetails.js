@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 const GameDetails = ({ games, addComment }) => {
+    const [errors, setErrors] = useState({
+        username: '',
+        comment: '',
+    })
     const { gameId } = useParams();
     const [comment, setComment] = useState({
         username: '',
@@ -13,8 +17,23 @@ const GameDetails = ({ games, addComment }) => {
     const addCommentHandler = (e) => {
         e.preventDefault();
         const result = `${comment.username}: ${comment.comment}`;
-        console.log(result);
         addComment(gameId, result);
+    }
+
+    const validateUsername = (e) => {
+        const username = e.target.value;
+        if (username.length < 3) {
+            setErrors(state => ({
+                ...state,
+                username: 'Username must be at least 3 characters long'
+            }))
+        }
+        else {
+            setErrors(state => ({
+                ...state,
+                username: ''
+            }))
+        }
     }
 
     const onChangeHandler = (e) => {
@@ -52,12 +71,12 @@ const GameDetails = ({ games, addComment }) => {
 
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
-                    <a href="#" className="button">
+                    <Link to={`/edit/${currentGame._id}`} className="button">
                         Edit
-                    </a>
-                    <a href="#" className="button">
+                    </Link>
+                    <Link to={`/delete/${currentGame._id}`} className="button">
                         Delete
-                    </a>
+                    </Link>
                 </div>
             </div>
             {/* Bonus */}
@@ -65,7 +84,14 @@ const GameDetails = ({ games, addComment }) => {
             <article className="create-comment">
                 <label>Add new comment:</label>
                 <form className="form" onSubmit={addCommentHandler}>
-                    <input type="text" name="username" placeholder="Name......" value={comment.username} onChange={onChangeHandler} />
+                    <input type="text"
+                        name="username"
+                        placeholder="Name......"
+                        value={comment.username}
+                        onBlur={validateUsername}
+                        onChange={onChangeHandler}
+                    />
+                    {errors.username && <p style={{ color: 'lightcoral' }}>{errors.username}</p>}
                     <textarea
                         name="comment"
                         placeholder="Comment......"
