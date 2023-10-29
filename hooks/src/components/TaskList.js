@@ -1,8 +1,9 @@
-const TaskList = ({ tasks }) => {
+import TaskItem from "./TaskItem";
 
+const TaskList = ({ tasks, removeTask }) => {
     return (
         <ul>
-            {tasks.map(t => <li key={t._id}>{t.task}</li>)}
+            {tasks.map(t => <TaskItem key={t._id} task={t} removeTask={removeTask} />)}
         </ul>
     )
 
