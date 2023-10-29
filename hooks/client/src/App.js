@@ -1,13 +1,10 @@
-import { useState } from 'react';
 import './App.css';
 import CreateTask from './components/CreateTask';
 import TaskList from './components/TaskList';
+import useFetch from './hooks/useFetch';
 
 function App() {
-    const [tasks, setTasks] = useState([
-        { _id: 1, task: 'first...' },
-        { _id: 2, task: 'second...' }
-    ]);
+    const [tasks, setTasks] = useFetch('http://localhost:3030/jsonstore/todos', []);
 
     const addTask = (task) => {
         setTasks(state => [...state, {
