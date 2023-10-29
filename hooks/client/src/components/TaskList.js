@@ -1,9 +1,9 @@
 import TaskItem from "./TaskItem";
 
-const TaskList = ({ tasks, removeTask }) => {
+const TaskList = ({ tasks }) => {
     return (
         <ul>
-            {tasks.map(t => <TaskItem key={t._id} task={t} removeTask={removeTask} />)}
+            {tasks.map(t => <TaskItem key={t._id} currentTask={t} />)}
         </ul>
     )
 

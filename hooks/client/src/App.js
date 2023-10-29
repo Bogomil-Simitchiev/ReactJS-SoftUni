@@ -1,18 +1,23 @@
 import './App.css';
 import CreateTask from './components/CreateTask';
 import TaskList from './components/TaskList';
+import TaskContext from './contexts/TaskContext';
 import useFetch from './hooks/useFetch';
 import useTodosApi from './hooks/useTodosApi';
 
 function App() {
     const [tasks, setTasks] = useFetch('http://localhost:3030/jsonstore/todos', []);
-    const { removeTodo } = useTodosApi();
+    const { removeTodo, createTodo, editTodo } = useTodosApi();
 
     const addTask = (task) => {
-        setTasks(state => [...state, {
-            _id: state[state.length - 1]?._id + 1 || 1,
-            task
-        }]);
+
+        createTodo(task).then(result => {
+
+            setTasks(state => [...state, {
+                _id: result._id,
+                task
+            }]);
+        })
     }
 
     const removeTask = (taskId) => {
@@ -21,14 +26,29 @@ function App() {
         })
     }
 
+    const editTask = (taskId, updatedTodo) => {
+        editTodo(taskId, updatedTodo).then(result => {
+            setTasks(state => state.map(todo => todo._id === taskId ? result : todo));
+
+        })
+
+    }
+
     return (
-        <div className="App">
-            <header className="App-header">
-                <h1>Todo App</h1>
-                <TaskList tasks={tasks} removeTask={removeTask} />
-                <CreateTask addTask={addTask} />
-            </header>
-        </div>
+        <TaskContext.Provider value={{
+            removeTask,
+            addTask,
+            editTask
+
+        }}>
+            <div className="App">
+                <header className="App-header">
+                    <h1>Todo App</h1>
+                    <TaskList tasks={tasks} />
+                    <CreateTask />
+                </header>
+            </div>
+        </TaskContext.Provider>
     );
 }
 
