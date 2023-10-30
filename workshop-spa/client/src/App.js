@@ -10,12 +10,30 @@ import CreateGame from './components/CreateGame/CreateGame';
 import Catalog from './components/Catalog/Catalog';
 import GameDetails from './components/GameDetails/GameDetails';
 import EditGame from './components/EditGame/EditGame';
-
+import AuthContext from './contexts/AuthContext';
+import { login, logout } from './services/authService';
+import Logout from './components/Logout/Logout';
 
 function App() {
 
     const [games, setGames] = useState([]);
+    const [user, setUser] = useState({});
+
     const navigate = useNavigate();
+
+    const loginUser = (email, password) => {
+        login(email, password).then(result => {
+            setUser(result);
+            navigate('/');
+        }).catch(err => console.log(err))
+    }
+
+    const logoutUser = (accessToken) => {
+        logout(accessToken).then(result => {
+            setUser({});
+            navigate('/');
+        }).catch(err => console.log(err))
+    }
 
     const addComment = (gameId, comment) => {
         setGames(state => {
@@ -59,23 +77,32 @@ function App() {
 
 
     return (
-        <div id="box">
-            <Header />
-            {/* Main Content */}
-            <main id="main-content">
-                <Routes>
-                    <Route path='/' element={<Home games={games} />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
-                    <Route path='/create' element={<CreateGame addGame={addGame} />} />
-                    <Route path='/catalog' element={<Catalog games={games} />} />
-                    <Route path='/details/:gameId' element={<GameDetails games={games} addComment={addComment} />} />
-                    <Route path='/edit/:gameId' element={<EditGame games={games} editGame={editGame} />} />
+        <AuthContext.Provider value={{
+            loginUser,
+            logoutUser,
+            user
 
-                </Routes>
-            </main>
+        }}>
+            <div id="box">
+                <Header />
+                {/* Main Content */}
+                <main id="main-content">
+                    <Routes>
+                        <Route path='/' element={<Home games={games} />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
+                        <Route path='/create' element={<CreateGame addGame={addGame} />} />
+                        <Route path='/catalog' element={<Catalog games={games} />} />
+                        <Route path='/details/:gameId' element={<GameDetails games={games} addComment={addComment} />} />
+                        <Route path='/edit/:gameId' element={<EditGame games={games} editGame={editGame} />} />
+                        <Route path='/logout' element={<Logout />} />
 
-        </div>
+
+                    </Routes>
+                </main>
+
+            </div>
+        </AuthContext.Provider>
 
     );
 }

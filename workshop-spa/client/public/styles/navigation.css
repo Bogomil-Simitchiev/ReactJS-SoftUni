@@ -59,6 +59,7 @@ footer {
 
 nav a {
     margin: 0 0.5em;
+    font-size: 20px;
 }
 
 nav a:hover {

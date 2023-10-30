@@ -1,9 +1,21 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
 
 const Login = () => {
+
+    const { loginUser } = useContext(AuthContext);
+
+    const loginHandler = (e) => {
+        e.preventDefault();
+
+        const { email, password } = Object.fromEntries(new FormData(e.target));
+        loginUser(email, password);
+
+    }
     return (
         <section id="login-page" className="auth">
-            <form id="login">
+            <form id="login" onSubmit={loginHandler}>
                 <div className="container">
                     <div className="brand-logo" />
                     <h1>Login</h1>
