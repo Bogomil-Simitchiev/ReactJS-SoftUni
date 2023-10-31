@@ -13,11 +13,12 @@ import EditGame from './components/EditGame/EditGame';
 import AuthContext from './contexts/AuthContext';
 import { login, logout } from './services/authService';
 import Logout from './components/Logout/Logout';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
 
     const [games, setGames] = useState([]);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useLocalStorage('user', {});
 
     const navigate = useNavigate();
 
