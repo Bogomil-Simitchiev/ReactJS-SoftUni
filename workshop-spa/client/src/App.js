@@ -60,8 +60,7 @@ function App() {
 
     const editGame = (editedGame, gameId) => {
         setGames(state => {
-            const games = state.filter(x => x._id !== gameId);
-            games.push(editedGame);
+            const games = state.map(x => x._id === gameId ? editedGame : x);
             return games;
         })
         navigate('/catalog');

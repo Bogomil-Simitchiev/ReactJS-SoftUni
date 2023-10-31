@@ -1,12 +1,17 @@
-import uniqid from 'uniqid';
+import AuthContext from "../../contexts/AuthContext";
+import { createGame } from "../../services/gameService";
+import { useContext } from "react";
 
 const CreateGame = ({ addGame }) => {
+    const { user } = useContext(AuthContext);
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
         const gameData = Object.fromEntries(new FormData(e.target));
-        gameData._id = uniqid();
-        addGame(gameData);
+
+        createGame(gameData, user.accessToken).then(result => {
+            addGame(result);
+        }).catch(err => console.log(err));
 
     }
 

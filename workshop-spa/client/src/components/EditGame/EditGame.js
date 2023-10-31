@@ -1,15 +1,20 @@
 import { useParams } from "react-router-dom";
+import { editCurrentGame } from "../../services/gameService";
+import { useContext } from "react";
+import AuthContext from "../../contexts/AuthContext";
 
 const EditGame = ({ games, editGame }) => {
     const { gameId } = useParams();
+    const { user } = useContext(AuthContext);
     const currentGame = games.find(g => g._id === gameId);
 
     const editHandler = (e) => {
         e.preventDefault();
 
         const editedGame = Object.fromEntries(new FormData(e.target));
-        editedGame._id = currentGame._id;
-        editGame(editedGame, gameId);
+        editCurrentGame(editedGame, gameId, user.accessToken).then(result => {
+            editGame(result, gameId);
+        }).catch(err => console.log(err));
     }
 
 
