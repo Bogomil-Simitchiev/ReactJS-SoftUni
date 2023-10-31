@@ -1,9 +1,31 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { register } from "../../services/authService";
+import AuthContext from "../../contexts/AuthContext";
 
 const Register = () => {
+    const { loginUser } = useContext(AuthContext);
+
+    const registerHandler = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const email = formData.get('email');
+        const password = formData.get('password');
+        const confirmPassword = formData.get('confirm-password');
+
+        if (password !== confirmPassword) {
+            return;
+        }
+
+        register(email, password).then(result => {
+            loginUser(result.email, result.password);
+        }).catch(err => console.log(err))
+
+    }
     return (
         <section id="register-page" className="content auth">
-            <form id="register">
+            <form id="register" onSubmit={registerHandler}>
                 <div className="container">
                     <div className="brand-logo" />
                     <h1>Register</h1>
