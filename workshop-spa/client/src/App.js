@@ -10,31 +10,14 @@ import CreateGame from './components/CreateGame/CreateGame';
 import Catalog from './components/Catalog/Catalog';
 import GameDetails from './components/GameDetails/GameDetails';
 import EditGame from './components/EditGame/EditGame';
-import AuthContext from './contexts/AuthContext';
-import { login, logout } from './services/authService';
+import  { AuthProvider } from './contexts/AuthContext';
 import Logout from './components/Logout/Logout';
-import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
 
     const [games, setGames] = useState([]);
-    const [user, setUser] = useLocalStorage('user', {});
 
     const navigate = useNavigate();
-
-    const loginUser = (email, password) => {
-        login(email, password).then(result => {
-            setUser(result);
-            navigate('/');
-        }).catch(err => console.log(err))
-    }
-
-    const logoutUser = (accessToken) => {
-        logout(accessToken).then(result => {
-            setUser({});
-            navigate('/');
-        }).catch(err => console.log(err))
-    }
 
     const addComment = (gameId, comment) => {
         setGames(state => {
@@ -77,12 +60,7 @@ function App() {
 
 
     return (
-        <AuthContext.Provider value={{
-            loginUser,
-            logoutUser,
-            user
-
-        }}>
+        <AuthProvider>
             <div id="box">
                 <Header />
                 {/* Main Content */}
@@ -102,7 +80,7 @@ function App() {
                 </main>
 
             </div>
-        </AuthContext.Provider>
+        </AuthProvider>
 
     );
 }
