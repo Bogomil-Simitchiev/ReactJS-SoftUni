@@ -1,16 +1,12 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../../contexts/AuthContext";
+import { withAuth } from "../../contexts/AuthContext";
 
-const Login = () => {
-
-    const { loginUser } = useContext(AuthContext);
-
+const Login = ({ auth }) => {
     const loginHandler = (e) => {
         e.preventDefault();
 
         const { email, password } = Object.fromEntries(new FormData(e.target));
-        loginUser(email, password);
+        auth.loginUser(email, password);
 
     }
     return (
@@ -40,4 +36,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default withAuth(Login);

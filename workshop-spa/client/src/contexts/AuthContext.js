@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { login, logout } from "../services/authService";
 import { useNavigate } from "react-router-dom";
@@ -34,4 +34,14 @@ export const AuthProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     )
+}
+
+export const withAuth = (Component) => {
+    const AuthWrapperComponent = (props) => {
+
+        const context = useContext(AuthContext);
+        return <Component {...props} auth={context} />
+    }
+
+    return AuthWrapperComponent;
 }
