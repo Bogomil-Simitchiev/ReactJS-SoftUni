@@ -12,6 +12,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import Logout from './components/Logout/Logout';
 import { GamePrider } from './contexts/GameContext';
 import DeleteGame from './components/DeleteGame/DeleteGame';
+import IsGuest from './components/common/IsNotLoggedIn';
+import IsLoggedIn from './components/common/IsLoggedIn';
 
 function App() {
     return (
@@ -23,15 +25,23 @@ function App() {
                     <GamePrider>
                         <Routes>
                             <Route path='/' element={<Home />} />
-                            <Route path='/login' element={<Login />} />
-                            <Route path='/register' element={<Register />} />
-                            <Route path='/create' element={<CreateGame />} />
                             <Route path='/catalog' element={<Catalog />} />
                             <Route path='/details/:gameId' element={<GameDetails />} />
-                            <Route path='/edit/:gameId' element={<EditGame />} />
-                            <Route path='/delete/:gameId' element={<DeleteGame />} />
 
-                            <Route path='/logout' element={<Logout />} />
+                            {/* For people who are logged in */}
+                            <Route element={<IsLoggedIn />}>
+                                <Route path='/login' element={<Login />} />
+                                <Route path='/register' element={<Register />} />
+                            </Route>
+
+                            {/* For people who are not logged in */}
+                            <Route element={<IsGuest />}>
+                                <Route path='/create' element={<CreateGame />} />
+                                <Route path='/logout' element={<Logout />} />
+                                <Route path='/edit/:gameId' element={<EditGame />} />
+                                <Route path='/delete/:gameId' element={<DeleteGame />} />
+                            </Route>
+
 
                         </Routes>
                     </GamePrider>

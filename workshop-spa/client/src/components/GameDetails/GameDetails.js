@@ -1,48 +1,38 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import GameContext from "../../contexts/GameContext";
+import { addCommentService, getCommentsForCurrentGame } from "../../services/gameService";
+import AuthContext from "../../contexts/AuthContext";
 
 const GameDetails = () => {
-    const { games, addComment } = useContext(GameContext);
-    const [errors, setErrors] = useState({
-        username: '',
-        comment: '',
-    })
+    const { games } = useContext(GameContext);
+    const { user } = useContext(AuthContext);
+    const [comments, setComments] = useState([]);
     const { gameId } = useParams();
-    const [comment, setComment] = useState({
-        username: '',
-        comment: ''
-    })
+
+    useEffect(() => {
+        getCommentsForCurrentGame(gameId).then(result => {
+            setComments(result);
+        }).catch(err => console.log(err));
+    }, [gameId])
+
 
     const currentGame = games.find(g => g._id === gameId);
 
     const addCommentHandler = (e) => {
         e.preventDefault();
-        const result = `${comment.username}: ${comment.comment}`;
-        addComment(gameId, result);
-    }
+        const formData = new FormData(e.target);
+        let username = formData.get('username');
+        let comment = formData.get('comment');
 
-    const validateUsername = (e) => {
-        const username = e.target.value;
-        if (username.length < 3) {
-            setErrors(state => ({
-                ...state,
-                username: 'Username must be at least 3 characters long'
-            }))
-        }
-        else {
-            setErrors(state => ({
-                ...state,
-                username: ''
-            }))
-        }
-    }
+        const result = `${username}: ${comment}`;
+        addCommentService(gameId, result, user.accessToken).then(result => {
+            setComments(state => [...state, result]);
+            document.getElementById('username').value = '';
+            document.getElementById('comment').value = '';
 
-    const onChangeHandler = (e) => {
-        setComment(state => ({
-            ...state,
-            [e.target.name]: e.target.value
-        }))
+        }).catch(err => console.log(err))
+
     }
 
     return (
@@ -62,12 +52,12 @@ const GameDetails = () => {
                 <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
-                        {currentGame.comments?.map(c =>
-                            <li className="comment">
-                                <p>{c}</p>
+                        {comments.map(c =>
+                            <li key={c._id} className="comment">
+                                <p>{c.comment}</p>
                             </li>
                         )}
-                        {!currentGame.comments && <p className="no-comment">No comments.</p>}
+                        {comments.length === 0 && <p className="no-comment">No comments.</p>}
                     </ul>
                 </div>
 
@@ -88,17 +78,13 @@ const GameDetails = () => {
                 <form className="form" onSubmit={addCommentHandler}>
                     <input type="text"
                         name="username"
+                        id="username"
                         placeholder="Name......"
-                        value={comment.username}
-                        onBlur={validateUsername}
-                        onChange={onChangeHandler}
                     />
-                    {errors.username && <p style={{ color: 'lightcoral' }}>{errors.username}</p>}
                     <textarea
                         name="comment"
+                        id="comment"
                         placeholder="Comment......"
-                        value={comment.comment}
-                        onChange={onChangeHandler}
                     />
                     <input
                         className="btn submit"

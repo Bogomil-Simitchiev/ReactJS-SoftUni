@@ -6,25 +6,9 @@ const GameContext = createContext();
 
 export default GameContext;
 
-
 export const GamePrider = ({ children }) => {
     const [games, setGames] = useState([]);
-
     const navigate = useNavigate();
-
-    const addComment = (gameId, comment) => {
-        setGames(state => {
-            const game = state.find(x => x._id === gameId);
-
-            const comments = game.comments || [];
-            comments.push(comment);
-
-            return [
-                ...state.filter(x => x._id !== gameId),
-                { ...game, comments }
-            ];
-        })
-    }
 
     const addGame = (newGame) => {
         setGames(state => {
@@ -61,7 +45,6 @@ export const GamePrider = ({ children }) => {
     return (
         <GameContext.Provider value={{
             games,
-            addComment,
             addGame,
             editGame,
             deleteGame

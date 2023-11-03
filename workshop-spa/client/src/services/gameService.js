@@ -37,3 +37,17 @@ export const deleteCurrentGame = (gameId, accessToken) => {
         },
     }).then(res => res.json())
 }
+
+export const addCommentService = (gameId, comment, accessToken) => {
+    return fetch(`${baseUrl}/data/comments`, {
+        method: 'POST',
+        headers: {
+            'X-Authorization': accessToken
+        },
+        body: JSON.stringify({ gameId, comment })
+    }).then(res => res.json())
+}
+
+export const getCommentsForCurrentGame = (gameId) => {
+    return fetch(`${baseUrl}/data/comments?where=gameId%3D%22${gameId}%22`).then(res => res.json())
+}
