@@ -1,9 +1,11 @@
 import AuthContext from "../../contexts/AuthContext";
+import GameContext from "../../contexts/GameContext";
 import { createGame } from "../../services/gameService";
 import { useContext } from "react";
 
-const CreateGame = ({ addGame }) => {
+const CreateGame = () => {
     const { user } = useContext(AuthContext);
+    const { addGame } = useContext(GameContext);
 
     const onSubmitHandler = (e) => {
         e.preventDefault();

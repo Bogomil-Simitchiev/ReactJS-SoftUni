@@ -2,8 +2,10 @@ import { useParams } from "react-router-dom";
 import { editCurrentGame } from "../../services/gameService";
 import { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
+import GameContext from "../../contexts/GameContext";
 
-const EditGame = ({ games, editGame }) => {
+const EditGame = () => {
+    const { games, editGame } = useContext(GameContext);
     const { gameId } = useParams();
     const { user } = useContext(AuthContext);
     const currentGame = games.find(g => g._id === gameId);
