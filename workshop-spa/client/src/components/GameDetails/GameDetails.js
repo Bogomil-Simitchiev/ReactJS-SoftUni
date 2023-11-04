@@ -1,23 +1,24 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
-import GameContext from "../../contexts/GameContext";
-import { addCommentService, getCommentsForCurrentGame } from "../../services/gameService";
+import { addCommentService, getCommentsForCurrentGame, getGame } from "../../services/gameService";
 import AuthContext from "../../contexts/AuthContext";
 
 const GameDetails = () => {
-    const { games } = useContext(GameContext);
     const { user } = useContext(AuthContext);
-    const [comments, setComments] = useState([]);
     const { gameId } = useParams();
+    const [comments, setComments] = useState([]);
+    const [currentGame, setGame] = useState({});
+
 
     useEffect(() => {
         getCommentsForCurrentGame(gameId).then(result => {
             setComments(result);
         }).catch(err => console.log(err));
+
+        getGame(gameId).then(result => {
+            setGame(result);
+        }).catch(err => console.log(err));
     }, [gameId])
-
-
-    const currentGame = games.find(g => g._id === gameId);
 
     const addCommentHandler = (e) => {
         e.preventDefault();
@@ -48,7 +49,8 @@ const GameDetails = () => {
                 <p className="text">
                     {currentGame.summary}
                 </p>
-                {/* Bonus ( for Guests and Users ) */}
+                {/* ( for Guests and Users ) */}
+
                 <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
@@ -62,37 +64,44 @@ const GameDetails = () => {
                 </div>
 
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
-                <div className="buttons">
-                    <Link to={`/edit/${currentGame._id}`} className="button">
-                        Edit
-                    </Link>
-                    <Link to={`/delete/${currentGame._id}`} className="button">
-                        Delete
-                    </Link>
-                </div>
+                {currentGame._ownerId === user._id
+                    ? <div className="buttons">
+                        <Link to={`/edit/${currentGame._id}`} className="button">
+                            Edit
+                        </Link>
+                        <Link to={`/delete/${currentGame._id}`} className="button">
+                            Delete
+                        </Link>
+                    </div> : <></>
+                }
+
             </div>
             {/* Bonus */}
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
-            <article className="create-comment">
-                <label>Add new comment:</label>
-                <form className="form" onSubmit={addCommentHandler}>
-                    <input type="text"
-                        name="username"
-                        id="username"
-                        placeholder="Name......"
-                    />
-                    <textarea
-                        name="comment"
-                        id="comment"
-                        placeholder="Comment......"
-                    />
-                    <input
-                        className="btn submit"
-                        type="submit"
-                        value="Add Comment"
-                    />
-                </form>
-            </article>
+
+            {user.email && currentGame._ownerId !== user._id
+                ? <article className="create-comment">
+                    <label>Add new comment:</label>
+                    <form className="form" onSubmit={addCommentHandler}>
+                        <input type="text"
+                            name="username"
+                            id="username"
+                            placeholder="Name......"
+                        />
+                        <textarea
+                            name="comment"
+                            id="comment"
+                            placeholder="Comment......"
+                        />
+                        <input
+                            className="btn submit"
+                            type="submit"
+                            value="Add Comment"
+                        />
+                    </form>
+                </article> : <></>}
+
+
         </section>
     )
 

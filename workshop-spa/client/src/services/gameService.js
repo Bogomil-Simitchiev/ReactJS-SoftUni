@@ -4,6 +4,10 @@ export const getAllGames = () => {
     return fetch(`${baseUrl}/data/games`)
         .then(res => res.json())
 }
+export const getGame = (gameId) => {
+    return fetch(`${baseUrl}/data/games/${gameId}`)
+        .then(res => res.json())
+}
 
 export const createGame = (gameData, accessToken) => {
     return fetch(`${baseUrl}/data/games`, {

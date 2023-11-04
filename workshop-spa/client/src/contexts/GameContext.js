@@ -23,7 +23,7 @@ export const GamePrider = ({ children }) => {
             const games = state.map(x => x._id === gameId ? editedGame : x);
             return games;
         })
-        navigate('/catalog');
+        navigate(`/details/${gameId}`);
     }
 
     const deleteGame = (gameId) => {
