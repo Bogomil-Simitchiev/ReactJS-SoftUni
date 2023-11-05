@@ -1,14 +1,21 @@
 import { useParams } from "react-router-dom";
-import { editCurrentGame } from "../../services/gameService";
-import { useContext } from "react";
+import { editCurrentGame, getGame } from "../../services/gameService";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import GameContext from "../../contexts/GameContext";
 
 const EditGame = () => {
-    const { games, editGame } = useContext(GameContext);
+    const { editGame } = useContext(GameContext);
     const { gameId } = useParams();
     const { user } = useContext(AuthContext);
-    const currentGame = games.find(g => g._id === gameId);
+    const [currentGame, setGame] = useState({});
+
+    useEffect(() => {
+        getGame(gameId).then(result => {
+            setGame(result);
+        }).catch(err => console.log(err));
+    }, [gameId])
+
 
     const editHandler = (e) => {
         e.preventDefault();

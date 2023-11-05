@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
-import { addCommentService, getCommentsForCurrentGame, getGame } from "../../services/gameService";
+import { addCommentService, deleteCurrentGame, getCommentsForCurrentGame, getGame } from "../../services/gameService";
 import AuthContext from "../../contexts/AuthContext";
+import GameContext from "../../contexts/GameContext";
 
 const GameDetails = () => {
     const { user } = useContext(AuthContext);
+    const { deleteGame } = useContext(GameContext);
     const { gameId } = useParams();
     const [comments, setComments] = useState([]);
     const [currentGame, setGame] = useState({});
-
 
     useEffect(() => {
         getCommentsForCurrentGame(gameId).then(result => {
@@ -34,6 +35,12 @@ const GameDetails = () => {
 
         }).catch(err => console.log(err))
 
+    }
+
+    const delGame = (gameId, accessToken) => {
+        deleteCurrentGame(gameId, accessToken).then(() => {
+            deleteGame(gameId);
+        }).catch(err => console.log(err))
     }
 
     return (
@@ -69,9 +76,9 @@ const GameDetails = () => {
                         <Link to={`/edit/${currentGame._id}`} className="button">
                             Edit
                         </Link>
-                        <Link to={`/delete/${currentGame._id}`} className="button">
+                        <button onClick={() => delGame(gameId, user.accessToken)} className="button">
                             Delete
-                        </Link>
+                        </button>
                     </div> : <></>
                 }
 

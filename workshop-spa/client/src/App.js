@@ -11,9 +11,9 @@ import EditGame from './components/EditGame/EditGame';
 import { AuthProvider } from './contexts/AuthContext';
 import Logout from './components/Logout/Logout';
 import { GamePrider } from './contexts/GameContext';
-import DeleteGame from './components/DeleteGame/DeleteGame';
 import IsGuest from './components/common/IsNotLoggedIn';
 import IsLoggedIn from './components/common/IsLoggedIn';
+import PageNotFound from './components/PageNotFound/PageNotFound';
 
 function App() {
     return (
@@ -39,10 +39,8 @@ function App() {
                                 <Route path='/create' element={<CreateGame />} />
                                 <Route path='/logout' element={<Logout />} />
                                 <Route path='/edit/:gameId' element={<EditGame />} />
-                                <Route path='/delete/:gameId' element={<DeleteGame />} />
                             </Route>
-
-
+                            <Route path="*" element={<PageNotFound />} />
                         </Routes>
                     </GamePrider>
                 </main>

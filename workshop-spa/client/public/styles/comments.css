@@ -10,7 +10,14 @@
 .details-comments {
     display: table-cell;
 }
-
+.notFound {
+    text-align: center;
+    font-size: 36px; /* Adjust the font size as needed */
+    color: #ffffff; /* Set your preferred text color */
+    padding: 10px;
+    margin-top: 200px;
+    font-size: 58px;
+  }
 .create-comment {
     margin-top: 60px;
     position: relative;
