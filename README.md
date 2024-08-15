@@ -1,2 +1,2 @@
 # ReactJS-SoftUni
-front-end course including ReactJS
+SoftUni ReactJS Course
